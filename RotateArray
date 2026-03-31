@@ -1,0 +1,44 @@
+
+//Rotate the Array with k by K index  
+
+package arrRotate;
+
+public class ArrayRotate 
+{
+	public static void reverse(int[] arr, int a, int b) 
+	{
+		int start = a;
+		int end = b;
+		
+		while(start<end)
+		{
+			int temp = arr[start];
+			arr[start]=arr[end];
+			arr[end]=temp;
+			start++;
+			end--;
+		}
+		for(int i = 0; i < arr.length;i++) {
+			System.out.print(" "+ arr[i]);
+		}
+		System.out.println("");
+		
+	}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		int k = 3;
+		int arr1[]= {1,2,3,4,5,6,7};
+		System.out.println("original array:");
+		for(int i = 0; i < arr1.length;i++) {
+			System.out.print(" "+arr1[i]);
+		}
+		System.out.println("\nFully reverse array:");
+		reverse(arr1,0,arr1.length-1);
+		System.out.println("before k reverse array:");
+		reverse(arr1,0,k-1);
+		System.out.println("after k reverse array:");
+		reverse(arr1,k,arr1.length-1);
+		
+
+	}
+}
