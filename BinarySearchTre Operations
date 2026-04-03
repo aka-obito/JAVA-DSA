@@ -1,0 +1,279 @@
+package tree;
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.Scanner;
+
+public class Node {
+	
+	int data;
+	Node left;
+	Node right;
+	
+	public Node(int data) {
+		this.data = data;
+		this.left = null;
+		this.right = null;
+	}
+}
+
+
+class BSTTree{
+	Node root = null;
+	
+	
+	public  void addInTreeBasicMethod(int data) {
+		Node newNode = new Node(data);
+		if(root == null) {
+			root = newNode;
+		}
+		else 
+		{	
+			Node curr = root;
+			while(true) {
+				if(data < curr.data) {
+					if(curr.left == null) {
+						curr.left = newNode;
+						break;
+					}
+					else {
+						curr = curr.left;
+					}	
+				}
+				else {
+					if(curr.right == null) {
+						curr.right = newNode;
+						break;
+					}
+					else {
+						curr = curr.right;
+					}		
+				}
+			}	
+		}
+	}
+	
+	public void insertIntoTreeStanadardMethod(int data) {
+		Node newNode  = new Node(data);	
+		if(root == null) {
+			root = newNode;
+		}
+		
+		else {
+			Node current = root;
+			Node parent = null;
+			
+			while(current!=null) {
+				parent = current;
+				if(data<current.data) {
+					current = current.left;
+				}
+				else 
+				{
+					current = current.right;
+				}
+			}
+			if(data<parent.data) {
+				parent.left = newNode;
+			}
+			else {
+				parent.right = newNode;
+			}
+		}
+		
+	}
+	
+	
+	//--------------------------------------------------------------------
+	public void inorder() {
+		System.out.println("\nInorder---");
+		Inorder(root);	
+	}
+	public void Inorder(Node root) {
+		if(root == null) return;
+		Inorder(root.left);
+		System.out.print(root.data+"->");
+		Inorder(root.right);
+	}
+	
+	
+	
+	public void preorder() {
+		System.out.println("\nPreorder---");
+		preorder(root);
+	}
+	public void preorder(Node root) {
+		if(root == null) return;
+		System.out.print(root.data+"->");
+		preorder(root.left);
+		preorder(root.right);
+	}
+	
+	
+	
+	public void postorder() {
+		System.out.println("\nPostorder---");
+		postorder(root);
+	}
+	public void postorder(Node root) {
+		if(root == null) return;
+		postorder(root.left);
+		postorder(root.right);
+		System.out.print(root.data+"->");
+	}
+	
+	
+//---------------------------------------------------------------------------
+	public void inorderIterative() {
+		inorderIterative(root);
+	}
+	
+	public void inorderIterative(Node root) {
+		Deque<Node> stack = new ArrayDeque<>();
+		Node current = root;
+		
+		while(current!=null || !stack.isEmpty()) {
+			while(current!=null) {
+				stack.push(current);
+				current = current.left;
+			}
+			current = stack.pop();
+			System.out.println(current.data + "->");
+			current = current.right;
+		}
+		
+	}
+
+//	public void postorderIterative() {
+//		postorderIterative(root);
+//		
+//	}
+//	public void postorderIterative(Node root) {
+//		Deque<Node> stack = new ArrayDeque<>();  
+//	    if (root == null) return;
+//	    
+//	    stack.push(root);
+//	    while (!stack.isEmpty()) {
+//	    	Node current = root;
+//	    	while(current!=null) {
+//	    		// Push right first
+//		        if (current.right != null) {
+//		            stack.push(current.right);
+//		        }
+//		        
+//		     // Push left second
+//		        if (current.left != null) {
+//		            stack.push(current.left);
+//		            current=current.left;
+//		        }
+//	    	}
+//	    	
+//	    	current = stack.pop();
+//	        System.out.print(current.data + "->");       
+//	    }
+//	}
+	
+	
+	public void preorderIterative() {
+		preorderIterative(root);
+		
+	}
+	public void preorderIterative(Node root) {
+		Deque<Node> stack = new ArrayDeque<>();
+	    if (root == null) return;
+	    
+	    stack.push(root);
+	    while (!stack.isEmpty()) {
+	        Node current = stack.pop();
+	        System.out.print(current.data + "->");
+
+	        // Push right first
+	        if (current.right != null) {
+	            stack.push(current.right);
+	        }
+
+	        // Push left second
+	        if (current.left != null) {
+	            stack.push(current.left);
+	        }
+	    }
+	}
+}
+
+public class TestBST {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        BSTTree tree = new BSTTree();
+
+        int choice, data;
+        System.out.println("\n===== BST MENU =====");
+        System.out.println("1. Insert (Basic Method)");
+        System.out.println("2. Insert (Standard Method)");
+        System.out.println("3. Inorder (Recursive)");
+        System.out.println("4. Preorder (Recursive)");
+        System.out.println("5. Postorder (Recursive)");
+        System.out.println("6. Inorder (Iterative)");
+        System.out.println("7. Preorder (Iterative)");
+        System.out.println("0. Exit");
+
+        do {
+            System.out.print("Enter your choice: ");
+
+            choice = sc.nextInt();
+
+            switch (choice) {
+                case 1:
+                	System.out.println("\n------Basic Method--------");
+                    System.out.print("Enter data: ");
+                    data = sc.nextInt();
+                    tree.addInTreeBasicMethod(data);
+                    break;
+
+                case 2:
+                	System.out.println("\n------Standard Method------");
+                    System.out.print("Enter data: ");
+                    data = sc.nextInt();
+                    tree.insertIntoTreeStanadardMethod(data);
+                    break;
+
+                case 3:
+                    tree.inorder();
+                    break;
+
+                case 4:
+                    tree.preorder();
+                    break;
+
+                case 5:
+                    tree.postorder();
+                    break;
+
+                case 6:
+                    System.out.println("\nInorder Iterative---");
+                    tree.inorderIterative();
+                    break;
+
+                case 7:
+                    System.out.println("\nPreorder Iterative---");
+                    tree.preorderIterative();
+                    break;
+
+                case 0:
+                    System.out.println("Exiting...");
+                    break;
+
+                default:
+                    System.out.println("Invalid choice!");
+            }
+
+        } while (choice != 0);
+
+        sc.close();
+    }
+
+
+
+
+
+
+
